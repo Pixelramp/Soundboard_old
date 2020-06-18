@@ -14,6 +14,7 @@ What's planned?
   - Add Hotkey function
   - Color Control
   - Custom Button names
+  - Proper saving method (now saving in a .txt file)
   
   
 How does it work?
