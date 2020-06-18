@@ -13,6 +13,7 @@ What's working?
 What's planned?
   - Add Hotkey function
   - Color Control
+  - Custom Button names
   
   
 How does it work?
