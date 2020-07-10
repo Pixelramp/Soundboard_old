@@ -28,5 +28,5 @@ How does it work?
       
       
 Known Bugs:
-  - Volume sometimes not working
+  - Volume sometimes not working (Currently not fixable. Not working because Voicemeeter)
   
