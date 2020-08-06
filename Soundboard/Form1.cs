@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace Soundboard
 {
@@ -18,8 +19,9 @@ namespace Soundboard
         player player = new player();
         int aktSeite = 0;
         int buttonCount = 0;
-        List<String> soundPath = new List<string>();
+        List<string> soundPath = new List<string>();
         List<Button> buttons = new List<Button>();
+        List<string> name = new List<string>();
         saveLoad save = new saveLoad();
         public Form1()
         {
@@ -70,15 +72,18 @@ namespace Soundboard
             }
             else
             {
-                if (soundPath[id - 1] == "Leer")
+                if (soundPath[id - 1] == "Leer")                    //Wenn kein Sound exitiert
                 {
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         string selectedFileName = dialog.FileName;
                         soundPath[id - 1] = selectedFileName;
                         setButtonNames(aktSeite);
+
                         save.save(soundPath);
+
                     }
+                    
 
                 }
                 else
@@ -103,8 +108,11 @@ namespace Soundboard
         {
             for (int i = 0; i < 24; i++)
             {
-                buttons[i].Text = soundPath[i + (24 * seite)];
-
+               
+                string buttonName = "";
+                int pos = soundPath[i + (24 * seite)].LastIndexOf("\\") + 1;
+                buttonName = soundPath[i + (24 * seite)].Substring(pos, soundPath[i + (24 * seite)].Length - pos);
+                buttons[i].Text = buttonName;
             }
         }
 
