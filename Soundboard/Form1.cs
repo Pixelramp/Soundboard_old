@@ -154,7 +154,7 @@ namespace Soundboard
                 int pos = soundPath[i + (24 * seite)].LastIndexOf("\\") + 1;
                 buttonName = soundPath[i + (24 * seite)].Substring(pos, soundPath[i + (24 * seite)].Length - pos);
                 buttons[i].Text = buttonName;
-                buttons[i].BackColor = farben[i + (24 * seite)];
+                buttons[i].BackColor = farben[i + (24 * seite) + 1 ];
             }       
         }
 
