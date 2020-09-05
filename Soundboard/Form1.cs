@@ -23,17 +23,30 @@ namespace Soundboard
         List<Button> buttons = new List<Button>();
         List<string> name = new List<string>();
         saveLoad save = new saveLoad();
+        List<Color> farben = new List<Color>();
         public Form1()
         {
             InitializeComponent();
         }
 
-        public void fillListEmpty() // Anzahl wieiviel buttons auf seite
+        public void fillListEmpty(string list) // Anzahl wieiviel buttons auf seite
         {
-            for (int i = 0; i < 24; i++)
+            if (list == "sound")
             {
-                soundPath.Add("Leer");
+                for (int i = 0; i < 24; i++)
+                {
+                    soundPath.Add("Leer");
+                }
             }
+            if (list == "color")
+            {
+                for (int i = 0; i < 24; i++)
+                {
+                    farben.Add(Color.FromArgb(1));
+                    Console.WriteLine("NEUE FARBEN HINZUGEFÜGT");
+                }
+            }
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,15 +55,28 @@ namespace Soundboard
             label2.Text = "Lautstärke " + trackBar1.Value;
             button2.Enabled = false;
             label1.Text = Convert.ToString(aktSeite);
-            if (!save.fileexist())       //Wenn die datei nicht Existiert
+            if (!save.fileexist("color"))
             {
-                save.createFile();
-                fillListEmpty();
-                save.addText(soundPath);
+                save.createFile("color");
+                fillListEmpty("color");
+                save.saveC(farben, "color");
             }
             else
             {
-                soundPath = save.getList();
+                farben = save.getListC("color");
+                Console.WriteLine("FARBE GELESEN, ANZAHL"+ farben.Count);
+            }
+
+            if (!save.fileexist("sound"))       //Wenn die datei nicht Existiert
+            {
+                save.createFile("sound");
+                fillListEmpty("sound");
+                save.addText(soundPath,"sound");
+            }
+            else
+            {
+                soundPath = save.getList("sound");
+                
             }
             createButtons();
         }
@@ -62,43 +88,59 @@ namespace Soundboard
             id = id + 1 + (24 * aktSeite);
             Console.WriteLine("Lade Sound ID : " + id);
 
-            Console.WriteLine(save.fileexist());
+            Console.WriteLine(save.fileexist("sound"));
             OpenFileDialog dialog = new OpenFileDialog();
-            if (checkBox2.Checked) // Wenn löschen akktivieret
+            if (checkBox3.Checked)
             {
-                soundPath[id - 1] = "Leer";
-                setButtonNames(aktSeite);
-                save.save(soundPath);
+                ColorDialog colorDialog1 = new ColorDialog();
+                if (colorDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    buttons[id - 1 - (24 * aktSeite)].BackColor = Color.FromArgb(colorDialog1.Color.ToArgb());
+                    farben[id] = Color.FromArgb(colorDialog1.Color.ToArgb());
+                    save.saveC(farben, "color");
+                }
+                checkBox3.Checked = false;
+
             }
             else
             {
-                if (soundPath[id - 1] == "Leer")                    //Wenn kein Sound exitiert
+
+                if (checkBox2.Checked) // Wenn löschen akktivieret
                 {
-                    if (dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        string selectedFileName = dialog.FileName;
-                        soundPath[id - 1] = selectedFileName;
-                        setButtonNames(aktSeite);
-
-                        save.save(soundPath);
-
-                    }
-                    
-
+                    soundPath[id - 1] = "Leer";
+                    setButtonNames(aktSeite);
+                    save.save(soundPath,"sound");
                 }
                 else
                 {
-                    if (checkBox1.Checked)
+                    if (soundPath[id - 1] == "Leer")                    //Wenn kein Sound exitiert
                     {
-                        player.playSpam(soundPath[id - 1]);
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            string selectedFileName = dialog.FileName;
+                            soundPath[id - 1] = selectedFileName;
+                            setButtonNames(aktSeite);
+
+                            save.save(soundPath,"sound");
+
+                        }
+
+
                     }
                     else
                     {
-                        player.playSound(soundPath[id - 1]);
+                        if (checkBox1.Checked)
+                        {
+                            player.playSpam(soundPath[id - 1]);
+                        }
+                        else
+                        {
+                            player.playSound(soundPath[id - 1]);
+                        }
+
+
+                        //Spiele Sound
                     }
-
-
-                    //Spiele Sound
                 }
             }
 
@@ -108,12 +150,12 @@ namespace Soundboard
         {
             for (int i = 0; i < 24; i++)
             {
-               
                 string buttonName = "";
                 int pos = soundPath[i + (24 * seite)].LastIndexOf("\\") + 1;
                 buttonName = soundPath[i + (24 * seite)].Substring(pos, soundPath[i + (24 * seite)].Length - pos);
                 buttons[i].Text = buttonName;
-            }
+                buttons[i].BackColor = farben[i + (24 * seite)];
+            }       
         }
 
         public void createButtons()
@@ -127,6 +169,7 @@ namespace Soundboard
                 newButton.Name = buttons.Count.ToString();
                 newButton.Click += new EventHandler(button1_Click);
                 newButton.Location = new Point(posx, posy);
+                newButton.BackColor = farben[i];
                 posx += 130;
                 if (zahler == 5)
                 {
@@ -156,6 +199,17 @@ namespace Soundboard
             }
             return exist;
         }
+        public bool doesSiteExistC(int seite)
+        {
+            bool exist = true;
+            int anzahlsollte = 23 * (seite + 1);
+            if (farben.Count < anzahlsollte)
+            {
+                exist = false;
+            }
+            return exist;
+        }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -175,9 +229,16 @@ namespace Soundboard
             aktSeite++;
             if (!doesSiteExist(aktSeite))
             {
-                fillListEmpty();
-                save.save(soundPath);
+                fillListEmpty("sound");
+                fillListEmpty("color");
             }
+            if (!doesSiteExistC(aktSeite))
+            {
+                fillListEmpty("color");
+                save.saveC(farben, "color");
+            }
+
+
             Console.WriteLine(doesSiteExist(aktSeite));
             label1.Text = Convert.ToString(aktSeite);
             setButtonNames(aktSeite);

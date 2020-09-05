@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -11,38 +12,43 @@ namespace Soundboard
 {
     class saveLoad
     {
-        public bool fileexist()
+        public bool fileexist(string saveFile)
         {
             bool antwort = false;
-            if (File.Exists("sound.txt"))
+            if (File.Exists(saveFile+".txt"))
             {
                 antwort = true;
             }
-
-
             return antwort;
         }
 
-        public void createFile()
+        public void createFile(string saveFile)
         {
-            FileStream sw = File.Create("sound.txt");
+            FileStream sw = File.Create(saveFile+".txt");
             sw.Close();
         }
 
-        public void addText(List<String> sound)
+        public void addText(List<String> sound,string saveFile)
         {
-            TextWriter tw = new StreamWriter("sound.txt");
+            TextWriter tw = new StreamWriter(saveFile+".txt");
             foreach (String s in sound)
                 tw.WriteLine(s);
 
             tw.Close();
         }
+        public void addText(List<Color> sound, string saveFile)
+        {
+            TextWriter tw = new StreamWriter(saveFile + ".txt");
+            foreach (Color s in sound)
+                tw.WriteLine(s.ToArgb());
 
-        public List<String> getList()
+            tw.Close();
+        }
+        public List<String> getList(string saveFile)
         {
             List<String> sound = new List<string>();
 
-            using (var sr = new StreamReader("sound.txt"))
+            using (var sr = new StreamReader(saveFile+".txt"))
             {
                 while (sr.Peek() >= 0)
                     sound.Add(sr.ReadLine());
@@ -52,11 +58,35 @@ namespace Soundboard
             return sound;
         }
 
-        public void save(List<String> sound)
+        public List<Color> getListC(string saveFile)
         {
-            File.Delete("sound.txt");
-            this.createFile();
-            this.addText(sound);
+            List<Color> sound = new List<Color>();
+
+            using (var sr = new StreamReader(saveFile + ".txt"))
+            {
+                string jaja = "";
+                while (sr.Peek() >= 0)
+                {
+                    jaja = sr.ReadLine();
+                    int far = int.Parse(jaja);
+                    sound.Add(Color.FromArgb(far));
+                }
+                Console.WriteLine(sound.Count());
+            }
+            return sound;
+        }
+
+        public void save(List<String> sound, string saveFile)
+        {
+            File.Delete(saveFile+".txt");
+            this.createFile(saveFile);
+            this.addText(sound,saveFile);
+        }
+        public void saveC(List<Color> sound, string saveFile)
+        {
+            File.Delete(saveFile + ".txt");
+            this.createFile(saveFile);
+            this.addText(sound, saveFile);
         }
 
     }
