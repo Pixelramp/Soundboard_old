@@ -8,13 +8,12 @@ What's working?
   - Stop all playing sounds
   - Support for .mp3 (.wav not tested yet but should work)
   - Endless sound Buttons
-  
+  - Color Control
+  - Custom Button names
   
 What's planned?
   - Add Hotkey function
-  - Color Control
-  - Custom Button names
-  - Proper saving method (now saving in a .txt file)
+  - Easy button management form
   
   
 How does it work?
