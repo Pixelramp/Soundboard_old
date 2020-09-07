@@ -1,92 +1,102 @@
-﻿using System;
+﻿using Nancy.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
+
 
 namespace Soundboard
 {
+
     class saveLoad
-    {
-        public bool fileexist(string saveFile)
+   {
+        
+        public void saveJson(List<soundButton> list)
         {
-            bool antwort = false;
-            if (File.Exists(saveFile+".txt"))
+            TextWriter tw = new StreamWriter("name.dat");
+            TextWriter tw1 = new StreamWriter("pfad.dat");
+            TextWriter tw2 = new StreamWriter("color.dat");
+            List<string> name = new List<string>();
+            List<string> pfad = new List<string>();
+            List<string> farbe = new List<string>();
+            for (int i = 0; i < list.Count; i++)
             {
-                antwort = true;
+                name.Add(list[i].Name);
+                pfad.Add(list[i].Pfad);
+                farbe.Add(list[i].Farbe.ToArgb().ToString());
             }
-            return antwort;
-        }
 
-        public void createFile(string saveFile)
-        {
-            FileStream sw = File.Create(saveFile+".txt");
-            sw.Close();
-        }
-
-        public void addText(List<String> sound,string saveFile)
-        {
-            TextWriter tw = new StreamWriter(saveFile+".txt");
-            foreach (String s in sound)
+            foreach (String s in name)
+            {
                 tw.WriteLine(s);
-
-            tw.Close();
-        }
-        public void addText(List<Color> sound, string saveFile)
-        {
-            TextWriter tw = new StreamWriter(saveFile + ".txt");
-            foreach (Color s in sound)
-                tw.WriteLine(s.ToArgb());
-
-            tw.Close();
-        }
-        public List<String> getList(string saveFile)
-        {
-            List<String> sound = new List<string>();
-
-            using (var sr = new StreamReader(saveFile+".txt"))
-            {
-                while (sr.Peek() >= 0)
-                    sound.Add(sr.ReadLine());
             }
-            Console.WriteLine(sound.Count());
+            tw.Close();
 
-            return sound;
-        }
-
-        public List<Color> getListC(string saveFile)
-        {
-            List<Color> sound = new List<Color>();
-
-            using (var sr = new StreamReader(saveFile + ".txt"))
+            foreach (String s in pfad)
             {
-                string jaja = "";
-                while (sr.Peek() >= 0)
-                {
-                    jaja = sr.ReadLine();
-                    int far = int.Parse(jaja);
-                    sound.Add(Color.FromArgb(far));
-                }
-                Console.WriteLine(sound.Count());
+                tw1.WriteLine(s);
             }
-            return sound;
-        }
+            tw1.Close();
 
-        public void save(List<String> sound, string saveFile)
-        {
-            File.Delete(saveFile+".txt");
-            this.createFile(saveFile);
-            this.addText(sound,saveFile);
+            foreach (String s in farbe)
+            {
+                tw2.WriteLine(s);
+            }
+            tw2.Close();
+
         }
-        public void saveC(List<Color> sound, string saveFile)
+        public void createFile()
         {
-            File.Delete(saveFile + ".txt");
-            this.createFile(saveFile);
-            this.addText(sound, saveFile);
+           // File.Create("name.dat");
+           // File.Create("pfad.dat");
+          //  File.Create("color.dat");
+        }
+        public bool saveExist(string  save)
+        {
+
+            return File.Exists(save+".dat");
+        }
+        public List<soundButton> getLoadedList()
+        {
+            List<soundButton> list = new List<soundButton>();
+            List<string> name = new List<string>();
+            List<string> pfad = new List<string>();
+            List<string> farbe = new List<string>();
+
+            string[] readText = File.ReadAllLines("name.dat", Encoding.UTF8);
+            foreach (string s in readText)
+            {
+                name.Add(s);
+            }
+            readText = File.ReadAllLines("pfad.dat", Encoding.UTF8);
+            foreach (string s in readText)
+            {
+                pfad.Add(s);
+            }
+
+            readText = File.ReadAllLines("color.dat", Encoding.UTF8);
+            foreach (string s in readText)
+            {
+                farbe.Add(s);
+            }
+            for (int i = 0; i < pfad.Count; i++)
+            {
+                int colo = int.Parse(farbe[i]);
+                list.Add(new soundButton(pfad[i], name[i], Color.FromArgb(colo)));
+            }
+
+            return list;
         }
 
     }

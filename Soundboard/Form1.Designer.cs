@@ -132,6 +132,7 @@
             this.checkBox2.TabIndex = 8;
             this.checkBox2.Text = "Löschen";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
@@ -142,6 +143,7 @@
             this.checkBox3.TabIndex = 9;
             this.checkBox3.Text = "Color changer";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // Form1
             // 
