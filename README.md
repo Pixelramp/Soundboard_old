@@ -23,7 +23,7 @@ How does it work?
     
   - You'll need to change the audio output of the Soundboard. Open Windows Settings -> System -> Sound -> App Volume and device preferences.
     Set the output of the Soundboard to youre Voicemeet input (Like Cable Input). That's it it should work now.
-      - If you don't see the Soundbopard in the Settings just play a random sound on the Soundboard and it should appear in the Settings
+      - If you don't see the Soundboard in the Settings just play a random sound on the Soundboard and it should appear in the Settings
       
       
 Known Bugs:
