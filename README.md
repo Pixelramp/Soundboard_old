@@ -14,6 +14,7 @@ What's working?
 What's planned?
   - Add Hotkey function
   - Easy button management form
+  - Random sound button
   
   
 How does it work?
