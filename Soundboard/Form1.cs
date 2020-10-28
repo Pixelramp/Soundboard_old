@@ -124,7 +124,7 @@ namespace Soundboard
         }
         public void createButtons()
         {
-            int posx = 10;       // Unterschied 120
+            int posx = 10;       // Unterschied 120!
             int posy = 120;     // Unterschied 80 Pro Reihe
             int zahler = 0;     // MAximal 6 Pro Reihe
             int number = 0;
