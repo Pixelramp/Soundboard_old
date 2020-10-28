@@ -27,10 +27,10 @@ namespace Soundboard
         }
         public void fillListEmpty() // Anzahl wieiviel buttons auf seite
         {
-                for (int i = 0; i < 24; i++)
-                {
-                    sounder.Add(new soundButton("Leer","Leer",Color.FromArgb(1)));
-                }        
+            for (int i = 0; i < 24; i++)
+            {
+                sounder.Add(new soundButton("Leer", "Leer", Color.FromArgb(1)));
+            }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -47,7 +47,7 @@ namespace Soundboard
             {
                 sounder = save.getLoadedList();
             }
-            
+
             createButtons();
             save.saveJson(sounder);
         }
@@ -59,14 +59,14 @@ namespace Soundboard
         {
             var btn = (Button)sender;
             int id = int.Parse(btn.Name);
-            id = id  + (24 * aktSeite);
+            id = id + (24 * aktSeite);
             OpenFileDialog dialog = new OpenFileDialog();
             if (checkBox3.Checked)
             {
                 ColorDialog colorDialog1 = new ColorDialog();
                 if (colorDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    
+
                     sounder[id - (24 * aktSeite)].Button.BackColor = Color.FromArgb(colorDialog1.Color.ToArgb());
                     sounder[id].Farbe = Color.FromArgb(colorDialog1.Color.ToArgb());
                     speichern();
@@ -91,7 +91,7 @@ namespace Soundboard
                             sounder[id].Pfad = selectedFileName;
                             setButtonNames(aktSeite);
                             int pos = selectedFileName.LastIndexOf("\\") + 1;
-                            sounder[id].Name = Interaction.InputBox("Name of the Sound", "Name", selectedFileName.Substring(pos,selectedFileName.Length - pos));
+                            sounder[id].Name = Interaction.InputBox("Name of the Sound", "Name", selectedFileName.Substring(pos, selectedFileName.Length - pos));
                             sounder[id].Button.Text = sounder[id].Name;
                             Console.WriteLine(id);
                             speichern();
@@ -117,22 +117,22 @@ namespace Soundboard
             {
                 string buttonName = "";
                 Console.WriteLine(sounder[i + (24 * seite)].Name);
-                buttonName = sounder[i+(24*seite)].Name;
+                buttonName = sounder[i + (24 * seite)].Name;
                 sounder[i].Button.Text = buttonName;
                 sounder[i].Button.BackColor = sounder[i + (24 * seite)].Farbe;
-            }       
+            }
         }
         public void createButtons()
         {
-            int posx = 10;       // Unterschied 120!
+            int posx = 10;       // Unterschied 120
             int posy = 120;     // Unterschied 80 Pro Reihe
             int zahler = 0;     // MAximal 6 Pro Reihe
             int number = 0;
             for (int i = 0; i < 24; i++)
             {
                 Button newButton = new Button();
-               // int number = sounder.Count - 24;
-  
+                // int number = sounder.Count - 24;
+
                 Console.WriteLine(number);
                 newButton.Name = number.ToString();
                 newButton.Click += new EventHandler(button1_Click);
