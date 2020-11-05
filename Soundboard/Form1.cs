@@ -92,7 +92,7 @@ namespace Soundboard
                             setButtonNames(aktSeite);
                             int pos = selectedFileName.LastIndexOf("\\") + 1;
                             sounder[id].Name = Interaction.InputBox("Name of the Sound", "Name", selectedFileName.Substring(pos, selectedFileName.Length - pos));
-                            sounder[id].Button.Text = sounder[id].Name;
+                            setButtonNames(aktSeite);
                             Console.WriteLine(id);
                             speichern();
                         }
