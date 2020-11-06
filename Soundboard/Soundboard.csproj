@@ -90,6 +90,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -127,6 +128,24 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pfeilspitze-der-wiedergabetaste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\halt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rechter-pfeil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\linker-pfeil.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
