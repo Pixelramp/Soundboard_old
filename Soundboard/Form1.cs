@@ -18,10 +18,9 @@ namespace Soundboard
     {
         player player = new player();
         int aktSeite = 0;
-        int buttonCount = 0;
         List<soundButton> sounder = new List<soundButton>();
         saveLoad save = new saveLoad();
-        const string version = "1.2";
+        const string version = "2.1.1";
         public Form1()
         {
             InitializeComponent();
@@ -95,7 +94,6 @@ namespace Soundboard
                             int pos = selectedFileName.LastIndexOf("\\") + 1;
                             sounder[id].Name = Interaction.InputBox("Name of the Sound", "Name", selectedFileName.Substring(pos, selectedFileName.Length - pos));
                             setButtonNames(aktSeite);
-                            Console.WriteLine(id);
                             speichern();
                         }
                     }
@@ -118,7 +116,6 @@ namespace Soundboard
             for (int i = 0; i < 24; i++)
             {
                 string buttonName = "";
-                Console.WriteLine(sounder[i + (24 * seite)].Name);
                 buttonName = sounder[i + (24 * seite)].Name;
                 sounder[i].Button.Text = buttonName;
                 sounder[i].Button.BackColor = sounder[i + (24 * seite)].Farbe;
@@ -133,9 +130,7 @@ namespace Soundboard
             for (int i = 0; i < 24; i++)
             {
                 Button newButton = new Button();
-                // int number = sounder.Count - 24;
 
-                Console.WriteLine(number);
                 newButton.Name = number.ToString();
                 newButton.Click += new EventHandler(button1_Click);
                 newButton.Location = new Point(posx, posy);
@@ -154,7 +149,6 @@ namespace Soundboard
                 newButton.Size = new Size(130, 75);
                 sounder[i].Button = newButton;
                 this.Controls.Add(sounder[i].Button);
-                buttonCount++;
                 number++;
             }
             setButtonNames(aktSeite);
@@ -189,9 +183,7 @@ namespace Soundboard
         {
             button2.Enabled = true;
             aktSeite++;
-            //ÜBERPRÜFEN OB NEUE SEITE EXISTIERT WENN:
             fillListEmpty();
-            //DANNACH
             label1.Text = Convert.ToString(aktSeite);
             setButtonNames(aktSeite);
         }
@@ -240,6 +232,11 @@ namespace Soundboard
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

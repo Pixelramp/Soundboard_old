@@ -28,7 +28,6 @@ namespace Soundboard
         public void setVolume(int volume)
         {
             wplayer.settings.volume = volume;
-            Console.WriteLine("Setze Volume auf " + volume);
         }
         public void stopSound()
         {
