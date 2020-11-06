@@ -21,6 +21,7 @@ namespace Soundboard
         int buttonCount = 0;
         List<soundButton> sounder = new List<soundButton>();
         saveLoad save = new saveLoad();
+        const string version = "1.2";
         public Form1()
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace Soundboard
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            label4.Text = label4.Text + " " + version;
             trackBar1.Value = 50;
             label2.Text = "Lautstärke " + trackBar1.Value;
             button2.Enabled = false;
@@ -225,6 +227,21 @@ namespace Soundboard
             {
                 checkBox3.Enabled = true;
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e) // Pause
+        {
+            player.pause();
+        }
+
+        private void button5_Click(object sender, EventArgs e) // Play
+        {
+            player.resume();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

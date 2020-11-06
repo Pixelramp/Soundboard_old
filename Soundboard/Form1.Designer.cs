@@ -92,34 +92,32 @@
             this.label3.Size = new System.Drawing.Size(409, 75);
             this.label3.TabIndex = 7;
             this.label3.Text = "Soundboard";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 36);
+            this.checkBox2.Location = new System.Drawing.Point(12, 494);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(57, 17);
+            this.checkBox2.Size = new System.Drawing.Size(67, 17);
             this.checkBox2.TabIndex = 8;
-            this.checkBox2.Text = "Delete";
+            this.checkBox2.Text = "Löschen";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(12, 59);
+            this.checkBox3.Location = new System.Drawing.Point(86, 494);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(94, 17);
+            this.checkBox3.Size = new System.Drawing.Size(92, 17);
             this.checkBox3.TabIndex = 9;
-            this.checkBox3.Text = "Change colors";
+            this.checkBox3.Text = "Color changer";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label4.Location = new System.Drawing.Point(9, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);

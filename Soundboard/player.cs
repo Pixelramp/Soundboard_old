@@ -42,5 +42,15 @@ namespace Soundboard
             spamPlayer.Clear();
             GC.Collect();
         }
+
+        public void resume()
+        {
+            wplayer.controls.play();
+        }
+
+        public void pause()
+        {
+            wplayer.controls.pause();
+        }
     }
 }
