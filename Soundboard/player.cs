@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Soundboard
             player.URL = path;
             player.controls.play();
             spamPlayer.Add(player);
-
+            
         }
         public void setVolume(int volume)
         {
@@ -37,6 +38,9 @@ namespace Soundboard
             {
                 spamPlayer[i].controls.stop();
             }
+            
+            spamPlayer.Clear();
+            GC.Collect();
         }
     }
 }
