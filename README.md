@@ -10,10 +10,10 @@ What's working?
   - Endless sound Buttons
   - Color Control
   - Custom Button names
+  - Hotkey function
+  - Easy button management form
   
 What's planned?
-  - Add Hotkey function
-  - Easy button management form
   - Random sound button
   
   
