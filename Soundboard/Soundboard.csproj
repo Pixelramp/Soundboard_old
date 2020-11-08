@@ -74,13 +74,23 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotkeyKeys.cs" />
     <Compile Include="player.cs" />
+    <Compile Include="popUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="popUp.Designer.cs">
+      <DependentUpon>popUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="saveLoad.cs" />
     <Compile Include="soundButton.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="popUp.resx">
+      <DependentUpon>popUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

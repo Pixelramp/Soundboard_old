@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 
 namespace Soundboard
 {
+
     public partial class Form1 : Form
     {
+
+        public int a = 1;
+        // DLL libraries used to manage hotkeys
+        [DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        List<HotkeyKeys> hotkeys = new List<HotkeyKeys>();
         player player = new player();
         int aktSeite = 0;
         List<soundButton> sounder = new List<soundButton>();
         saveLoad save = new saveLoad();
-        const string version = "2.1.1";
+        const string version = "2.2";
+
         public Form1()
         {
             InitializeComponent();
@@ -29,11 +32,22 @@ namespace Soundboard
         {
             for (int i = 0; i < 24; i++)
             {
-                sounder.Add(new soundButton("Leer", "Leer", Color.FromArgb(1)));
+                sounder.Add(new soundButton("Leer", "Leer", Color.FromArgb(1), 0));
             }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            createHotkeysList();
+            for (int i = 0; i < hotkeys.Count; i++)
+           {
+               RegisterHotKey(this.Handle, i, 0, hotkeys[i].key);
+          }
+
+            for (int i = 0; i < hotkeys.Count; i++)
+            {
+                comboBox1.Items.Add(hotkeys[i].name);
+            }
+            
             label4.Text = label4.Text + " " + version;
             trackBar1.Value = 50;
             label2.Text = "Lautstärke " + trackBar1.Value;
@@ -47,44 +61,55 @@ namespace Soundboard
             else
             {
                 sounder = save.getLoadedList();
+                List<int> liste = new List<int>();
+                liste = save.getLoadedHokeys();
+                for (int i = 0; i < hotkeys.Count; i++)
+                {
+                    hotkeys[i].soundID = liste[i];
+                }
             }
 
             createButtons();
-            save.saveJson(sounder);
+            speichern();
         }
         private void speichern()
         {
-            save.saveJson(sounder);
+            List<string> hotkeySave = new List<string>();
+            for (int i = 0; i < hotkeys.Count; i++)
+            {
+                hotkeySave.Add(hotkeys[i].soundID.ToString());
+            }
+            save.saveJson(sounder, hotkeySave);
         }
         private void button1_Click(object sender, EventArgs e)
         {
             var btn = (Button)sender;
             int id = int.Parse(btn.Name);
             id = id + (24 * aktSeite);
+            Console.WriteLine(id);
             OpenFileDialog dialog = new OpenFileDialog();
-            if (checkBox3.Checked)
+            if (checkBox2.Checked)
             {
-                ColorDialog colorDialog1 = new ColorDialog();
-                if (colorDialog1.ShowDialog() == DialogResult.OK)
+                using (var form = new popUp(sounder[id].Name, sounder[id].Button.BackColor))
                 {
-
-                    sounder[id - (24 * aktSeite)].Button.BackColor = Color.FromArgb(colorDialog1.Color.ToArgb());
-                    sounder[id].Farbe = Color.FromArgb(colorDialog1.Color.ToArgb());
-                    speichern();
+                    var result = form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        sounder[id].Name = form.soundname;
+                        int action = form.actionID;
+                        sounder[id].Farbe = form.Color;
+                        if (action != -1)   // Hotkey gesetzt
+                        {
+                            hotkeys[action].soundID = id;
+                        }
+                    }
                 }
+                setButtonNames(aktSeite);
+                speichern();
             }
             else
             {
-                if (checkBox2.Checked) // Wenn löschen akktivieret
-                {
-                    sounder[id].Pfad = "Leer";
-                    sounder[id].Name = "Leer";
-                    setButtonNames(aktSeite);
-                    speichern();
-                }
-                else
-                {
-                    if (sounder[id].Pfad == "Leer")                    //Wenn kein Sound exitiert
+                 if (sounder[id].Pfad == "Leer")                    //Wenn kein Sound exitiert
                     {
                         if (dialog.ShowDialog() == DialogResult.OK)
                         {
@@ -108,8 +133,8 @@ namespace Soundboard
                             player.playSound(sounder[id].Pfad);
                         }
                     }
-                }
             }
+
         }
         public void setButtonNames(int seite)
         {
@@ -120,6 +145,18 @@ namespace Soundboard
                 sounder[i].Button.Text = buttonName;
                 sounder[i].Button.BackColor = sounder[i + (24 * seite)].Farbe;
             }
+        }
+        public void createHotkeysList() {
+            hotkeys.Add(new HotkeyKeys("Num 0", (int)Keys.NumPad0,0));
+            hotkeys.Add(new HotkeyKeys("Num 1", (int)Keys.NumPad1,1));
+            hotkeys.Add(new HotkeyKeys("Num 2", (int)Keys.NumPad2,2));
+            hotkeys.Add(new HotkeyKeys("Num 3", (int)Keys.NumPad3,3));
+            hotkeys.Add(new HotkeyKeys("Num 4", (int)Keys.NumPad4,4));
+            hotkeys.Add(new HotkeyKeys("Num 5", (int)Keys.NumPad5,5));
+            hotkeys.Add(new HotkeyKeys("Num 6", (int)Keys.NumPad6,6));
+            hotkeys.Add(new HotkeyKeys("Num 7", (int)Keys.NumPad7,7));
+            hotkeys.Add(new HotkeyKeys("Num 8", (int)Keys.NumPad8,8));
+            hotkeys.Add(new HotkeyKeys("Num 9", (int)Keys.NumPad9,9));
         }
         public void createButtons()
         {
@@ -197,29 +234,7 @@ namespace Soundboard
             label2.Text = "Lautstärke " + trackBar1.Value;
         }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox3.Checked)
-            {
-                checkBox2.Enabled = false;
-            }
-            else
-            {
-                checkBox2.Enabled = true;
-            }
-        }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox2.Checked)
-            {
-                checkBox3.Enabled = false;
-            }
-            else
-            {
-                checkBox3.Enabled = true;
-            }
-        }
 
         private void button1_Click_1(object sender, EventArgs e) // Pause
         {
@@ -239,6 +254,20 @@ namespace Soundboard
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x0312 )
+            {
+                int id = m.WParam.ToInt32();
+                Console.WriteLine(id + " Action id, Sound : "+ hotkeys[id].soundID);
+                if (hotkeys[id].soundID != -1)
+                {
+                    player.playSound(sounder[hotkeys[id].soundID].Pfad);
+                }
+            }
+            base.WndProc(ref m);
         }
     }
 }
