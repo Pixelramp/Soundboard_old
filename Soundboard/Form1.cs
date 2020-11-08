@@ -43,10 +43,6 @@ namespace Soundboard
                RegisterHotKey(this.Handle, i, 0, hotkeys[i].key);
           }
 
-            for (int i = 0; i < hotkeys.Count; i++)
-            {
-                comboBox1.Items.Add(hotkeys[i].name);
-            }
             
             label4.Text = label4.Text + " " + version;
             trackBar1.Value = 50;
