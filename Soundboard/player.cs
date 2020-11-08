@@ -51,5 +51,15 @@ namespace Soundboard
         {
             wplayer.controls.pause();
         }
+
+        public void resume()
+        {
+            wplayer.controls.play();
+        }
+
+        public void pause()
+        {
+            wplayer.controls.pause();
+        }
     }
 }
