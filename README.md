@@ -19,7 +19,7 @@ What's planned?
   
 How does it work?
 
-  - If you want to use it for Discord / TeamSpeak you'll need a Program that merges your Audio in and Outputs like Voicemeeter banana and Voicemeeter Virtual audio Cabvle
+  - If you want to use it for Discord / TeamSpeak you'll need a program that merges your Audio in and Outputs like Voicemeeter banana and Voicemeeter Virtual audio Cabvle
     Tutorial on setting up  Voicemeeter (https://www.youtube.com/watch?v=NYGuEY0WdSw)
     
   - You'll need to change the audio output of the Soundboard. Open Windows Settings -> System -> Sound -> App Volume and device preferences.
