@@ -15,7 +15,7 @@ What's working?
   
 What's planned?
   - Random sound button
-  
+  - Cloud save
   
 How does it work?
 
