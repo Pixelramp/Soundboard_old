@@ -16,6 +16,8 @@ What's working?
 What's planned?
   - Random sound button
   - Cloud save
+  - Stop Hokeysounds
+  - Removing that the numpad is locked (New Hotkey function is needed)
   
 How does it work?
 
