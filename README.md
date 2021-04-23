@@ -28,5 +28,6 @@ How does it work?
       
       
 Known Bugs:
-  - Volume sometimes not working (Currently not fixable. Not working because Voicemeeter)
+  - Volume sometimes not working (Currently not fixable. Not working because Voicemeeter) 
+  - If the sound is crackling in for example Discord, this should help you: https://www.youtube.com/watch?v=Ix3VvzeqVig
   
