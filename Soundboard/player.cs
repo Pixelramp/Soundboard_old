@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Soundboard
 {
-    class player
+    class player        //Handles sound playing
     {
         WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
         List<WMPLib.WindowsMediaPlayer> spamPlayer = new List<WMPLib.WindowsMediaPlayer>();
