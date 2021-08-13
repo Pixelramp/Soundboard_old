@@ -23,6 +23,7 @@ namespace Soundboard
         List<soundButton> sounder = new List<soundButton>();
         saveLoad save = new saveLoad();
         const string version = "2.2.1";
+        
 
         public Form1()
         {
@@ -85,22 +86,43 @@ namespace Soundboard
             OpenFileDialog dialog = new OpenFileDialog();
             if (checkBox2.Checked)
             {
-                using (var form = new popUp(sounder[id].Name, sounder[id].Button.BackColor))
+                if (sounder[id].Name != "Leer")
                 {
-                    var result = form.ShowDialog();
-                    if (result == DialogResult.OK)
+                    if (sounder[id].Button == null)
                     {
-                        sounder[id].Name = form.soundname;
-                        int action = form.actionID;
-                        sounder[id].Farbe = form.Color;
-                        if (action != -1)   // Hotkey gesetzt
+                        sounder[id].Button = new Button();
+                        sounder[id].Button.BackColor = Color.Gray;
+                    }
+                    using (var form = new popUp(sounder[id].Name, sounder[id].Button.BackColor))
+                    {
+                        var result = form.ShowDialog();
+                        if (result == DialogResult.OK)
                         {
-                            hotkeys[action].soundID = id;
+                            sounder[id].Name = form.soundname;
+                            int action = form.actionID;
+                            sounder[id].Farbe = form.Color;
+                            if (action != -1)   // Hotkey gesetzt
+                            {
+                                hotkeys[action].soundID = id;
+                            }
+                        }
+                        else if (result == DialogResult.No)
+                        {
+                            sounder[id].Name = "Leer";
+                            sounder[id].Pfad = "Leer";
+                            sounder[id].Key = 0;
+                            sounder[id].Button.BackColor = Color.Gray;
+                            speichern();
                         }
                     }
+                    setButtonNames(aktSeite);
+                    speichern();
                 }
-                setButtonNames(aktSeite);
-                speichern();
+                else
+                {
+                    MessageBox.Show("Cannot configure empty Button");
+                }
+                
             }
             else
             {

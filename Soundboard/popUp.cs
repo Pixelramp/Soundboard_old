@@ -42,9 +42,10 @@ namespace Soundboard
             hotkeys.Add(new HotkeyKeys("Num 8", (int)Keys.NumPad8,8));
             hotkeys.Add(new HotkeyKeys("Num 9", (int)Keys.NumPad9,9));
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)  //Löschen!
         {
-
+            this.DialogResult = DialogResult.No;
+            this.Close();
         }
 
         private void popUp_Load(object sender, EventArgs e)
