@@ -21,6 +21,8 @@ What's planned?
   - Dynamically disable Hotkey
   - Faster site switching
   - Seachrching for sound
+  - Check for new Version
+  - OTA-Update
   
 How does it work?
 
