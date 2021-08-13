@@ -22,7 +22,7 @@ namespace Soundboard
         int aktSeite = 0;
         List<soundButton> sounder = new List<soundButton>();
         saveLoad save = new saveLoad();
-        const string version = "2.2";
+        const string version = "2.2.1";
 
         public Form1()
         {
@@ -32,7 +32,7 @@ namespace Soundboard
         {
             for (int i = 0; i < 24; i++)
             {
-                sounder.Add(new soundButton("Leer", "Leer", Color.FromArgb(1), 0));
+                sounder.Add(new soundButton("Leer", "Leer", Color.Gray, 0));
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -48,7 +48,6 @@ namespace Soundboard
             trackBar1.Value = 50;
             label2.Text = "Lautstärke " + trackBar1.Value;
             button2.Enabled = false;
-            label1.Text = Convert.ToString(aktSeite);
             if (!save.saveExist("pfad"))
             {
                 save.createFile();
@@ -168,6 +167,8 @@ namespace Soundboard
                 newButton.Click += new EventHandler(button1_Click);
                 newButton.Location = new Point(posx, posy);
                 newButton.BackColor = sounder[i].Farbe;
+                newButton.FlatStyle = FlatStyle.Flat;
+                
                 posx += 130;
                 if (zahler == 5)
                 {
@@ -205,7 +206,7 @@ namespace Soundboard
         private void button2_Click(object sender, EventArgs e)
         {
             aktSeite--;
-            label1.Text = Convert.ToString(aktSeite);
+            numericUpDown1.Value = aktSeite;
             if (aktSeite == 0)
             {
                 button2.Enabled = false;
@@ -216,8 +217,8 @@ namespace Soundboard
         {
             button2.Enabled = true;
             aktSeite++;
+            numericUpDown1.Value = aktSeite;
             fillListEmpty();
-            label1.Text = Convert.ToString(aktSeite);
             setButtonNames(aktSeite);
         }
         private void button4_Click(object sender, EventArgs e)
@@ -264,6 +265,43 @@ namespace Soundboard
                 }
             }
             base.WndProc(ref m);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown1.Value < 0)
+            {
+                numericUpDown1.Value = 0;
+            }
+            else if ((int)numericUpDown1.Value == 0)
+            {
+                button2.Enabled = false;
+            }
+            else
+            {
+                button2.Enabled = true;
+            }
+            if (sounder.Count/24 < (int)numericUpDown1.Value)
+            {
+                while (sounder.Count / 24 < (int)numericUpDown1.Value)
+                {
+                    fillListEmpty();
+                }
+            }
+
+            aktSeite = (int)numericUpDown1.Value;
+            fillListEmpty();
+            setButtonNames(aktSeite);
         }
     }
 }
