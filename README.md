@@ -19,8 +19,6 @@ What's planned?
   - Stop Hokeysounds
   - Removing that the numpad is locked (New Hotkey function is needed)
   - Dynamically disable Hotkey
-  - Faster site switching
-  - Seachrching for sound
   - Check for new Version
   - OTA-Update
   
