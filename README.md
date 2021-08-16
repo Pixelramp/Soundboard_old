@@ -14,6 +14,7 @@ What's working?
   - Easy button management form
   
 What's planned?
+  - Huge update. New UI / Features listed below and more! Adding Login for Cloudsaves.
   - Random sound button
   - Cloud save
   - Stop Hokeysounds
