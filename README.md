@@ -1,4 +1,7 @@
 # Soundboard
+
+Discontinued - New Version availabe
+
 This is a customizable Soundboard for Windows. I never found one that got endless buttons and a high customizability. Easy to use, just add a Sound and play it.
 
 What's working?
